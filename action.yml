@@ -1,4 +1,4 @@
-name: "offtrack"
+name: "offtrack agent regression gate"
 description: "Gate CI on AI-agent trajectory regressions: record golden runs, diff new ones, fail on the first divergent step."
 branding:
   icon: "git-branch"
