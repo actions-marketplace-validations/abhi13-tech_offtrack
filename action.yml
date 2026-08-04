@@ -37,11 +37,12 @@ runs:
   steps:
     - name: Install offtrack
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
       run: |
         python -m pip install --quiet --upgrade pip
         if [ -z "${{ inputs.offtrack-version }}" ]; then
-          pip install --quiet .
+          # From source: always the checked-out repo root, regardless of
+          # working-directory (which points at the suite, not the package).
+          pip install --quiet "$GITHUB_WORKSPACE"
         elif [ "${{ inputs.offtrack-version }}" = "latest" ]; then
           pip install --quiet offtrack
         else
