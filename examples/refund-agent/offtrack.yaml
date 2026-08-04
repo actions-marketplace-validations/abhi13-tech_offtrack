@@ -1,0 +1,15 @@
+version: 1
+
+config:
+  repetitions: 5
+  timeout_s: 60
+
+suites:
+  - name: refund
+    tasks:
+      - id: over-limit
+        run: {command: ["python3", "agent.py", "--model", "${AGENT_MODEL}"]}
+        input: {order_id: "TEST-1"}
+      - id: under-limit
+        run: {command: ["python3", "agent.py", "--model", "${AGENT_MODEL}", "--order", "TEST-2"]}
+        input: {order_id: "TEST-2"}

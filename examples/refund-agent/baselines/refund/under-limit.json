@@ -1,0 +1,1074 @@
+{
+ "baseline": {
+  "baseline_id": "01KZ6RZ1902A0A325H0SENGVEM",
+  "config_hash": "a40db8dfab8b1246",
+  "created_at": "2026-08-04T16:16:02.848+00:00",
+  "git_ref": null,
+  "label": "default",
+  "model": null,
+  "task_key": "refund/under-limit"
+ },
+ "offtrack_schema": 1,
+ "trajectories": [
+  {
+   "attempt": 0,
+   "content_hash": "7a6b036be7a727f292edede5040a0323ed65561eaf2529bd2c01ba56f9955027",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.473000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:02.437000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.437000Z",
+     "idx": 0,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.437000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "662a14cab701a21efca81f6db38577c735c4f07d9473b5e141c24ad3de9773c4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.450000Z",
+     "idx": 1,
+     "latency_ms": 13,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-204",
+      "order_id": "TEST-2",
+      "status": "delivered",
+      "total_usd": 129.99
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.437000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.450000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.450000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99
+     },
+     "args_blob": null,
+     "content_hash": "73d23f0beddac381b660d7fee5fcb72ddb481e78128eee716e1da20321b0f7d7",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.460000Z",
+     "idx": 3,
+     "latency_ms": 10,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "auto_approve",
+      "limit_usd": 500
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.450000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "issue_refund"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "1314b42e62ea7744f638aff4f54f54f6f8004c9b782983d5b1f85e99fec263b4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.461000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.461000Z",
+     "status": "ok",
+     "tokens_in": 305,
+     "tokens_out": 24,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99,
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "ffad1ba98e64725525b3130f17f743333948a3d9ac16bc4081b3d19634297307",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.473000Z",
+     "idx": 5,
+     "latency_ms": 12,
+     "model": null,
+     "name": "issue_refund",
+     "parallel_group": null,
+     "result": {
+      "amount_usd": 129.99,
+      "ok": true,
+      "order_id": "TEST-2",
+      "refund_id": "rf-TEST-2"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.461000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.473000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.473000Z",
+     "status": "ok",
+     "tokens_in": 335,
+     "tokens_out": 38,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.473000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "Your refund of 129.99 has been issued. Reference: rf-TEST-2.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.473000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/under-limit",
+   "tokens_in": 1120,
+   "tokens_out": 101,
+   "trajectory_id": "01KZ6RZ0XHBV2HH9KP71X911X4",
+   "wall_ms": 36
+  },
+  {
+   "attempt": 1,
+   "content_hash": "7a6b036be7a727f292edede5040a0323ed65561eaf2529bd2c01ba56f9955027",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.562000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:02.526000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.526000Z",
+     "idx": 0,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.526000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "662a14cab701a21efca81f6db38577c735c4f07d9473b5e141c24ad3de9773c4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.537000Z",
+     "idx": 1,
+     "latency_ms": 11,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-204",
+      "order_id": "TEST-2",
+      "status": "delivered",
+      "total_usd": 129.99
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.526000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.537000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.537000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99
+     },
+     "args_blob": null,
+     "content_hash": "73d23f0beddac381b660d7fee5fcb72ddb481e78128eee716e1da20321b0f7d7",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.550000Z",
+     "idx": 3,
+     "latency_ms": 13,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "auto_approve",
+      "limit_usd": 500
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.537000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "issue_refund"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "1314b42e62ea7744f638aff4f54f54f6f8004c9b782983d5b1f85e99fec263b4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.550000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.550000Z",
+     "status": "ok",
+     "tokens_in": 305,
+     "tokens_out": 24,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99,
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "ffad1ba98e64725525b3130f17f743333948a3d9ac16bc4081b3d19634297307",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.561000Z",
+     "idx": 5,
+     "latency_ms": 11,
+     "model": null,
+     "name": "issue_refund",
+     "parallel_group": null,
+     "result": {
+      "amount_usd": 129.99,
+      "ok": true,
+      "order_id": "TEST-2",
+      "refund_id": "rf-TEST-2"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.550000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.562000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.562000Z",
+     "status": "ok",
+     "tokens_in": 335,
+     "tokens_out": 38,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.562000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "Your refund of 129.99 has been issued. Reference: rf-TEST-2.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.562000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/under-limit",
+   "tokens_in": 1120,
+   "tokens_out": 101,
+   "trajectory_id": "01KZ6RZ10A4PPTCDW03Y8QRPAV",
+   "wall_ms": 36
+  },
+  {
+   "attempt": 2,
+   "content_hash": "7a6b036be7a727f292edede5040a0323ed65561eaf2529bd2c01ba56f9955027",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.658000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:02.622000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.622000Z",
+     "idx": 0,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.622000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "662a14cab701a21efca81f6db38577c735c4f07d9473b5e141c24ad3de9773c4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.633000Z",
+     "idx": 1,
+     "latency_ms": 11,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-204",
+      "order_id": "TEST-2",
+      "status": "delivered",
+      "total_usd": 129.99
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.622000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.634000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.634000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99
+     },
+     "args_blob": null,
+     "content_hash": "73d23f0beddac381b660d7fee5fcb72ddb481e78128eee716e1da20321b0f7d7",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.644000Z",
+     "idx": 3,
+     "latency_ms": 10,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "auto_approve",
+      "limit_usd": 500
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.634000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "issue_refund"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "1314b42e62ea7744f638aff4f54f54f6f8004c9b782983d5b1f85e99fec263b4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.645000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.645000Z",
+     "status": "ok",
+     "tokens_in": 305,
+     "tokens_out": 24,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99,
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "ffad1ba98e64725525b3130f17f743333948a3d9ac16bc4081b3d19634297307",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.658000Z",
+     "idx": 5,
+     "latency_ms": 13,
+     "model": null,
+     "name": "issue_refund",
+     "parallel_group": null,
+     "result": {
+      "amount_usd": 129.99,
+      "ok": true,
+      "order_id": "TEST-2",
+      "refund_id": "rf-TEST-2"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.645000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.658000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.658000Z",
+     "status": "ok",
+     "tokens_in": 335,
+     "tokens_out": 38,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.658000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "Your refund of 129.99 has been issued. Reference: rf-TEST-2.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.658000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/under-limit",
+   "tokens_in": 1120,
+   "tokens_out": 101,
+   "trajectory_id": "01KZ6RZ139M4Z2YXGT5EC5JEFT",
+   "wall_ms": 36
+  },
+  {
+   "attempt": 3,
+   "content_hash": "7a6b036be7a727f292edede5040a0323ed65561eaf2529bd2c01ba56f9955027",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.743000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:02.704000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.705000Z",
+     "idx": 0,
+     "latency_ms": 1,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.704000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "662a14cab701a21efca81f6db38577c735c4f07d9473b5e141c24ad3de9773c4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.718000Z",
+     "idx": 1,
+     "latency_ms": 13,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-204",
+      "order_id": "TEST-2",
+      "status": "delivered",
+      "total_usd": 129.99
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.705000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.718000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.718000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99
+     },
+     "args_blob": null,
+     "content_hash": "73d23f0beddac381b660d7fee5fcb72ddb481e78128eee716e1da20321b0f7d7",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.730000Z",
+     "idx": 3,
+     "latency_ms": 12,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "auto_approve",
+      "limit_usd": 500
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.718000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "issue_refund"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "1314b42e62ea7744f638aff4f54f54f6f8004c9b782983d5b1f85e99fec263b4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.731000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.731000Z",
+     "status": "ok",
+     "tokens_in": 305,
+     "tokens_out": 24,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99,
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "ffad1ba98e64725525b3130f17f743333948a3d9ac16bc4081b3d19634297307",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.743000Z",
+     "idx": 5,
+     "latency_ms": 12,
+     "model": null,
+     "name": "issue_refund",
+     "parallel_group": null,
+     "result": {
+      "amount_usd": 129.99,
+      "ok": true,
+      "order_id": "TEST-2",
+      "refund_id": "rf-TEST-2"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.731000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.743000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.743000Z",
+     "status": "ok",
+     "tokens_in": 335,
+     "tokens_out": 38,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.743000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "Your refund of 129.99 has been issued. Reference: rf-TEST-2.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.743000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/under-limit",
+   "tokens_in": 1120,
+   "tokens_out": 101,
+   "trajectory_id": "01KZ6RZ1611C0QKXMRTZEYM7TE",
+   "wall_ms": 39
+  },
+  {
+   "attempt": 4,
+   "content_hash": "7a6b036be7a727f292edede5040a0323ed65561eaf2529bd2c01ba56f9955027",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.841000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:02.803000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.803000Z",
+     "idx": 0,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.803000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "662a14cab701a21efca81f6db38577c735c4f07d9473b5e141c24ad3de9773c4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.816000Z",
+     "idx": 1,
+     "latency_ms": 13,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-204",
+      "order_id": "TEST-2",
+      "status": "delivered",
+      "total_usd": 129.99
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.803000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.816000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.816000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99
+     },
+     "args_blob": null,
+     "content_hash": "73d23f0beddac381b660d7fee5fcb72ddb481e78128eee716e1da20321b0f7d7",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.829000Z",
+     "idx": 3,
+     "latency_ms": 13,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "auto_approve",
+      "limit_usd": 500
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.816000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "issue_refund"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "1314b42e62ea7744f638aff4f54f54f6f8004c9b782983d5b1f85e99fec263b4",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.829000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.829000Z",
+     "status": "ok",
+     "tokens_in": 305,
+     "tokens_out": 24,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 129.99,
+      "order_id": "TEST-2"
+     },
+     "args_blob": null,
+     "content_hash": "ffad1ba98e64725525b3130f17f743333948a3d9ac16bc4081b3d19634297307",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.840000Z",
+     "idx": 5,
+     "latency_ms": 11,
+     "model": null,
+     "name": "issue_refund",
+     "parallel_group": null,
+     "result": {
+      "amount_usd": 129.99,
+      "ok": true,
+      "order_id": "TEST-2",
+      "refund_id": "rf-TEST-2"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.829000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.841000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.841000Z",
+     "status": "ok",
+     "tokens_in": 335,
+     "tokens_out": 38,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.841000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "Your refund of 129.99 has been issued. Reference: rf-TEST-2.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.841000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/under-limit",
+   "tokens_in": 1120,
+   "tokens_out": 101,
+   "trajectory_id": "01KZ6RZ190QNT0CH0MQTDC4QP6",
+   "wall_ms": 38
+  }
+ ]
+}

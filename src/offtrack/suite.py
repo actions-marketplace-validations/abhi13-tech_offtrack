@@ -105,17 +105,10 @@ class ResolvedTask(BaseModel):
     repetitions: int
     timeout_s: int
     mask_config: dict[str, Any]
-
-    @property
-    def config_hash(self) -> str:
-        volatile_excluded = {
-            "run": self.task.run.model_dump(),
-            "input": self.task.input,
-            "env": self.task.env,
-            "matrix_env": self.matrix_env,
-            "mask": self.mask_config,
-        }
-        return sha256_hex(canonical_json(volatile_excluded))[:16]
+    # Hashed from the UN-interpolated task definition: editing offtrack.yaml
+    # marks baselines stale, but changing an env var (e.g. the model under
+    # test) is the experiment — never staleness.
+    config_hash: str = ""
 
 
 class SuiteFile(BaseModel):
@@ -182,6 +175,16 @@ def resolve_tasks(sf: SuiteFile, only: list[str] | None = None) -> list[Resolved
     missing: set[str] = set()
     for suite in sf.suites:
         for task in suite.tasks:
+            raw_hash = sha256_hex(
+                canonical_json(
+                    {
+                        "run": task.run.model_dump(),
+                        "input": task.input,
+                        "env": task.env,  # un-interpolated: ${VARS} stay literal
+                        "mask": task.mask,
+                    }
+                )
+            )[:16]
             slots: list[dict[str, str]] = [{}]
             for key, values in task.matrix.items():
                 slots = [dict(s, **{key: v}) for s in slots for v in values]
@@ -204,6 +207,7 @@ def resolve_tasks(sf: SuiteFile, only: list[str] | None = None) -> list[Resolved
                         repetitions=resolved_task.repetitions or sf.config.repetitions,
                         timeout_s=resolved_task.timeout_s or sf.config.timeout_s,
                         mask_config=mask_config,
+                        config_hash=raw_hash,
                     )
                 )
     if missing:

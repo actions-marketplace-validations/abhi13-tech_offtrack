@@ -1,0 +1,1074 @@
+{
+ "baseline": {
+  "baseline_id": "01KZ6RZ0ST4W4W6MD6HTABTA57",
+  "config_hash": "6912e95c8835da00",
+  "created_at": "2026-08-04T16:16:02.362+00:00",
+  "git_ref": null,
+  "label": "default",
+  "model": null,
+  "task_key": "refund/over-limit"
+ },
+ "offtrack_schema": 1,
+ "trajectories": [
+  {
+   "attempt": 0,
+   "content_hash": "40fc8fd505793170e6a6645c24c1a7e83f8f3fe886d78fe5072af39af49fea11",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.018000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:01.982000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:01.982000Z",
+     "idx": 0,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:01.982000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1"
+     },
+     "args_blob": null,
+     "content_hash": "93c21b960767d56be7ce17f32ea6e1394d1555ca1c630a24db8dd48745a8f3ff",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:01.993000Z",
+     "idx": 1,
+     "latency_ms": 11,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-311",
+      "order_id": "TEST-1",
+      "status": "shipped",
+      "total_usd": 842.0
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:01.982000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:01.993000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:01.993000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 842.0
+     },
+     "args_blob": null,
+     "content_hash": "0b648f330ce791aff459623cfb062dc0a80289bfb8e958ea957322515920d2c5",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.005000Z",
+     "idx": 3,
+     "latency_ms": 12,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "requires_escalation",
+      "limit_usd": 500,
+      "reason": "amount $842.00 exceeds auto-refund limit $500"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:01.993000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "escalate"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "8e1d7ef9812bdf6d5b9f15416d851706c6127c085a14dc719813ac0dcdcc851a",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.005000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.005000Z",
+     "status": "ok",
+     "tokens_in": 310,
+     "tokens_out": 25,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1",
+      "reason": "refund above auto-approve limit"
+     },
+     "args_blob": null,
+     "content_hash": "6c79ecd2fa3e1007bda48efda463e79efeee3f463920a17ca46ee8722d8fb0bf",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.018000Z",
+     "idx": 5,
+     "latency_ms": 13,
+     "model": null,
+     "name": "escalate",
+     "parallel_group": null,
+     "result": {
+      "order_id": "TEST-1",
+      "queued": true,
+      "ticket_id": "esc-TEST-1"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.005000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.018000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.018000Z",
+     "status": "ok",
+     "tokens_in": 340,
+     "tokens_out": 42,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.018000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "I've escalated this refund request to a human agent because the amount exceeds our auto-refund limit. Ticket: esc-TEST-1.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.018000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/over-limit",
+   "tokens_in": 1130,
+   "tokens_out": 106,
+   "trajectory_id": "01KZ6RZ0F8ESK170DANSNH9FX1",
+   "wall_ms": 36
+  },
+  {
+   "attempt": 1,
+   "content_hash": "40fc8fd505793170e6a6645c24c1a7e83f8f3fe886d78fe5072af39af49fea11",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.097000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:02.062000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.062000Z",
+     "idx": 0,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.062000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1"
+     },
+     "args_blob": null,
+     "content_hash": "93c21b960767d56be7ce17f32ea6e1394d1555ca1c630a24db8dd48745a8f3ff",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.074000Z",
+     "idx": 1,
+     "latency_ms": 11,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-311",
+      "order_id": "TEST-1",
+      "status": "shipped",
+      "total_usd": 842.0
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.063000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.074000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.074000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 842.0
+     },
+     "args_blob": null,
+     "content_hash": "0b648f330ce791aff459623cfb062dc0a80289bfb8e958ea957322515920d2c5",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.086000Z",
+     "idx": 3,
+     "latency_ms": 12,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "requires_escalation",
+      "limit_usd": 500,
+      "reason": "amount $842.00 exceeds auto-refund limit $500"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.074000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "escalate"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "8e1d7ef9812bdf6d5b9f15416d851706c6127c085a14dc719813ac0dcdcc851a",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.086000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.086000Z",
+     "status": "ok",
+     "tokens_in": 310,
+     "tokens_out": 25,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1",
+      "reason": "refund above auto-approve limit"
+     },
+     "args_blob": null,
+     "content_hash": "6c79ecd2fa3e1007bda48efda463e79efeee3f463920a17ca46ee8722d8fb0bf",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.096000Z",
+     "idx": 5,
+     "latency_ms": 10,
+     "model": null,
+     "name": "escalate",
+     "parallel_group": null,
+     "result": {
+      "order_id": "TEST-1",
+      "queued": true,
+      "ticket_id": "esc-TEST-1"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.086000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.097000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.097000Z",
+     "status": "ok",
+     "tokens_in": 340,
+     "tokens_out": 42,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.097000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "I've escalated this refund request to a human agent because the amount exceeds our auto-refund limit. Ticket: esc-TEST-1.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.097000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/over-limit",
+   "tokens_in": 1130,
+   "tokens_out": 106,
+   "trajectory_id": "01KZ6RZ0HQ53MT9A6F3Z7E4TSR",
+   "wall_ms": 35
+  },
+  {
+   "attempt": 2,
+   "content_hash": "40fc8fd505793170e6a6645c24c1a7e83f8f3fe886d78fe5072af39af49fea11",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.178000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:02.141000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.142000Z",
+     "idx": 0,
+     "latency_ms": 1,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.141000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1"
+     },
+     "args_blob": null,
+     "content_hash": "93c21b960767d56be7ce17f32ea6e1394d1555ca1c630a24db8dd48745a8f3ff",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.154000Z",
+     "idx": 1,
+     "latency_ms": 12,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-311",
+      "order_id": "TEST-1",
+      "status": "shipped",
+      "total_usd": 842.0
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.142000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.155000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.155000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 842.0
+     },
+     "args_blob": null,
+     "content_hash": "0b648f330ce791aff459623cfb062dc0a80289bfb8e958ea957322515920d2c5",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.166000Z",
+     "idx": 3,
+     "latency_ms": 11,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "requires_escalation",
+      "limit_usd": 500,
+      "reason": "amount $842.00 exceeds auto-refund limit $500"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.155000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "escalate"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "8e1d7ef9812bdf6d5b9f15416d851706c6127c085a14dc719813ac0dcdcc851a",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.166000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.166000Z",
+     "status": "ok",
+     "tokens_in": 310,
+     "tokens_out": 25,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1",
+      "reason": "refund above auto-approve limit"
+     },
+     "args_blob": null,
+     "content_hash": "6c79ecd2fa3e1007bda48efda463e79efeee3f463920a17ca46ee8722d8fb0bf",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.177000Z",
+     "idx": 5,
+     "latency_ms": 11,
+     "model": null,
+     "name": "escalate",
+     "parallel_group": null,
+     "result": {
+      "order_id": "TEST-1",
+      "queued": true,
+      "ticket_id": "esc-TEST-1"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.166000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.178000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.178000Z",
+     "status": "ok",
+     "tokens_in": 340,
+     "tokens_out": 42,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.178000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "I've escalated this refund request to a human agent because the amount exceeds our auto-refund limit. Ticket: esc-TEST-1.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.178000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/over-limit",
+   "tokens_in": 1130,
+   "tokens_out": 106,
+   "trajectory_id": "01KZ6RZ0M8BZNAVXSCFE7E3TCJ",
+   "wall_ms": 37
+  },
+  {
+   "attempt": 3,
+   "content_hash": "40fc8fd505793170e6a6645c24c1a7e83f8f3fe886d78fe5072af39af49fea11",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.261000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:02.222000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.223000Z",
+     "idx": 0,
+     "latency_ms": 1,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.222000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1"
+     },
+     "args_blob": null,
+     "content_hash": "93c21b960767d56be7ce17f32ea6e1394d1555ca1c630a24db8dd48745a8f3ff",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.235000Z",
+     "idx": 1,
+     "latency_ms": 12,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-311",
+      "order_id": "TEST-1",
+      "status": "shipped",
+      "total_usd": 842.0
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.223000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.235000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.235000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 842.0
+     },
+     "args_blob": null,
+     "content_hash": "0b648f330ce791aff459623cfb062dc0a80289bfb8e958ea957322515920d2c5",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.248000Z",
+     "idx": 3,
+     "latency_ms": 13,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "requires_escalation",
+      "limit_usd": 500,
+      "reason": "amount $842.00 exceeds auto-refund limit $500"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.235000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "escalate"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "8e1d7ef9812bdf6d5b9f15416d851706c6127c085a14dc719813ac0dcdcc851a",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.248000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.248000Z",
+     "status": "ok",
+     "tokens_in": 310,
+     "tokens_out": 25,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1",
+      "reason": "refund above auto-approve limit"
+     },
+     "args_blob": null,
+     "content_hash": "6c79ecd2fa3e1007bda48efda463e79efeee3f463920a17ca46ee8722d8fb0bf",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.261000Z",
+     "idx": 5,
+     "latency_ms": 13,
+     "model": null,
+     "name": "escalate",
+     "parallel_group": null,
+     "result": {
+      "order_id": "TEST-1",
+      "queued": true,
+      "ticket_id": "esc-TEST-1"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.248000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.261000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.261000Z",
+     "status": "ok",
+     "tokens_in": 340,
+     "tokens_out": 42,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.261000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "I've escalated this refund request to a human agent because the amount exceeds our auto-refund limit. Ticket: esc-TEST-1.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.261000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/over-limit",
+   "tokens_in": 1130,
+   "tokens_out": 106,
+   "trajectory_id": "01KZ6RZ0PV8HMACHPBY1JC6GPR",
+   "wall_ms": 39
+  },
+  {
+   "attempt": 4,
+   "content_hash": "40fc8fd505793170e6a6645c24c1a7e83f8f3fe886d78fe5072af39af49fea11",
+   "cost_usd": null,
+   "ended_at": "2026-08-04T16:16:02.355000Z",
+   "kind": "baseline",
+   "meta": {},
+   "source": "agent",
+   "started_at": "2026-08-04T16:16:02.317000Z",
+   "status": "complete",
+   "steps": [
+    {
+     "args": {
+      "tool_intent": [
+       "lookup_order"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "7a786b3fd73b2ef03bfda38d0fb8013a71c7b4ebfa2a913bd85e6b1bb28f4840",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.317000Z",
+     "idx": 0,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.317000Z",
+     "status": "ok",
+     "tokens_in": 220,
+     "tokens_out": 18,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1"
+     },
+     "args_blob": null,
+     "content_hash": "93c21b960767d56be7ce17f32ea6e1394d1555ca1c630a24db8dd48745a8f3ff",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.330000Z",
+     "idx": 1,
+     "latency_ms": 13,
+     "model": null,
+     "name": "lookup_order",
+     "parallel_group": null,
+     "result": {
+      "customer": "c-311",
+      "order_id": "TEST-1",
+      "status": "shipped",
+      "total_usd": 842.0
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.317000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "check_refund_policy"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "82a2cc43838fc736f323513662bf314a1dd7b58149f76deddd1b1696bc725014",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.330000Z",
+     "idx": 2,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.330000Z",
+     "status": "ok",
+     "tokens_in": 260,
+     "tokens_out": 21,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "amount_usd": 842.0
+     },
+     "args_blob": null,
+     "content_hash": "0b648f330ce791aff459623cfb062dc0a80289bfb8e958ea957322515920d2c5",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.342000Z",
+     "idx": 3,
+     "latency_ms": 12,
+     "model": null,
+     "name": "check_refund_policy",
+     "parallel_group": null,
+     "result": {
+      "decision": "requires_escalation",
+      "limit_usd": 500,
+      "reason": "amount $842.00 exceeds auto-refund limit $500"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.330000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": [
+       "escalate"
+      ]
+     },
+     "args_blob": null,
+     "content_hash": "8e1d7ef9812bdf6d5b9f15416d851706c6127c085a14dc719813ac0dcdcc851a",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.342000Z",
+     "idx": 4,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": false
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.342000Z",
+     "status": "ok",
+     "tokens_in": 310,
+     "tokens_out": 25,
+     "type": "llm_call"
+    },
+    {
+     "args": {
+      "order_id": "TEST-1",
+      "reason": "refund above auto-approve limit"
+     },
+     "args_blob": null,
+     "content_hash": "6c79ecd2fa3e1007bda48efda463e79efeee3f463920a17ca46ee8722d8fb0bf",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.355000Z",
+     "idx": 5,
+     "latency_ms": 13,
+     "model": null,
+     "name": "escalate",
+     "parallel_group": null,
+     "result": {
+      "order_id": "TEST-1",
+      "queued": true,
+      "ticket_id": "esc-TEST-1"
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.342000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "tool_call"
+    },
+    {
+     "args": {
+      "tool_intent": []
+     },
+     "args_blob": null,
+     "content_hash": "752d5b0ad15e325e708b8e0a18fac8fe8c57a4e41229580086635a24c936a503",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.355000Z",
+     "idx": 6,
+     "latency_ms": 0,
+     "model": "fake-careful",
+     "name": "fake-careful",
+     "parallel_group": null,
+     "result": {
+      "final": true
+     },
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.355000Z",
+     "status": "ok",
+     "tokens_in": 340,
+     "tokens_out": 42,
+     "type": "llm_call"
+    },
+    {
+     "args": null,
+     "args_blob": null,
+     "content_hash": "e3fd5630e8d615c578bcb434c748fed024d5d39d6872a2fd6018abe689bac083",
+     "cost_usd": null,
+     "ended_at": "2026-08-04T16:16:02.355000Z",
+     "idx": 7,
+     "latency_ms": 0,
+     "model": null,
+     "name": "final",
+     "parallel_group": null,
+     "result": "I've escalated this refund request to a human agent because the amount exceeds our auto-refund limit. Ticket: esc-TEST-1.",
+     "result_blob": null,
+     "started_at": "2026-08-04T16:16:02.355000Z",
+     "status": "ok",
+     "tokens_in": null,
+     "tokens_out": null,
+     "type": "final_answer"
+    }
+   ],
+   "task_key": "refund/over-limit",
+   "tokens_in": 1130,
+   "tokens_out": 106,
+   "trajectory_id": "01KZ6RZ0STX4PJ9Z9N5T2XHQYM",
+   "wall_ms": 38
+  }
+ ]
+}
