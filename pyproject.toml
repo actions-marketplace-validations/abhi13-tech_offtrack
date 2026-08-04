@@ -1,0 +1,84 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "offtrack"
+version = "0.1.0.dev0"
+description = "git diff for AI agent runs — record golden trajectories, find the first divergent step, gate CI on real regressions"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Abhishek Reddy Adunoori", email = "adunooriabhishekreddy@gmail.com" }]
+keywords = ["llm", "agents", "evaluation", "regression-testing", "observability", "opentelemetry", "ci"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Testing",
+  "Topic :: Software Development :: Quality Assurance",
+  "Framework :: Pytest",
+  "Typing :: Typed",
+]
+dependencies = [
+  "typer>=0.12",
+  "rich>=13.0",
+  "pydantic>=2.5",
+  "pyyaml>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/abhi13-tech/offtrack"
+Issues = "https://github.com/abhi13-tech/offtrack/issues"
+
+[project.scripts]
+offtrack = "offtrack.cli.app:main"
+
+[project.entry-points.pytest11]
+offtrack = "offtrack.pytest_plugin"
+
+[project.optional-dependencies]
+openai = ["openai>=1.30"]
+anthropic = ["anthropic>=0.30"]
+langgraph = ["langchain-core>=0.2"]
+otel = ["opentelemetry-sdk>=1.25"]
+pytest = ["pytest>=7"]
+all = ["offtrack[openai,anthropic,langgraph,otel,pytest]"]
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "pytest-cov>=5",
+  "pytest-xdist>=3.6",
+  "ruff>=0.6",
+  "mypy>=1.11",
+  "types-pyyaml",
+]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["SIM108"]
+
+[tool.mypy]
+strict = true
+python_version = "3.10"
+files = ["src/offtrack"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["src/offtrack"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/offtrack"]
