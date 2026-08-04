@@ -4,7 +4,7 @@ All notable changes to offtrack are documented here. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-08-XX
+## [0.1.0] - 2026-08-04
 
 Initial release.
 
