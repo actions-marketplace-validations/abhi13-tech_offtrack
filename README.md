@@ -11,6 +11,8 @@ Record golden trajectories. Re-run after any change. See the first step where yo
 
 ---
 
+![offtrack demo: record golden trajectories, then catch the model that skips the refund policy check](docs/demo.gif)
+
 You bumped a model. Or tweaked a prompt. Or upgraded your agent framework.
 
 Every eval score still looks fine. But your agent now refunds $842 **without checking the refund policy** — cheaper, faster, and catastrophically wrong:
