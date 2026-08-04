@@ -11,6 +11,7 @@ from typing import Any
 
 from offtrack.align import best_variant_match
 from offtrack.align.engine import VariantMatch
+from offtrack.align.matchers import AlignContext, default_openai_embedder
 from offtrack.mask import MaskRule, mask_hash, masked_trajectory_steps, parse_rules
 from offtrack.model import Step, Trajectory, TrajStatus
 from offtrack.stats import (
@@ -91,6 +92,20 @@ def compare_task(
     mhash = mask_hash(rules)
     ignore = config.ignore_steps
 
+    embedder = None
+    if config.align.final_answer == "embedding":
+        embedder = default_openai_embedder()
+
+    def make_ctx(model_exempt: bool = False) -> AlignContext:
+        return AlignContext(
+            rel_tol=config.align.rel_tol,
+            model_exempt=model_exempt,
+            aliases=config.align.aliases,
+            final_answer_mode=config.align.final_answer,
+            final_answer_threshold=config.align.final_answer_threshold,
+            embedder=embedder,
+        )
+
     usable_baselines = [b for b in baselines if b.status not in (TrajStatus.EMPTY,)]
     prepared_base = [(b, _prepare(b, rules, ignore)) for b in usable_baselines]
 
@@ -108,8 +123,7 @@ def compare_task(
                 others,
                 probe,
                 threshold=config.align.divergence_threshold,
-                rel_tol=config.align.rel_tol,
-                aliases=config.align.aliases,
+                ctx=make_ctx(),
             )
             if m.alignment.is_divergent:
                 k_b += 1
@@ -153,9 +167,7 @@ def compare_task(
                 masked_variants,
                 probe,
                 threshold=config.align.divergence_threshold,
-                rel_tol=config.align.rel_tol,
-                model_exempt=model_exempt,
-                aliases=config.align.aliases,
+                ctx=make_ctx(model_exempt=model_exempt),
             )
             divergent = match.alignment.is_divergent
             for w in match.alignment.warnings:

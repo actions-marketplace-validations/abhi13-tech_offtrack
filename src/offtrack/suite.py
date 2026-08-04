@@ -28,6 +28,18 @@ class AlignConfig(BaseModel):
     rel_tol: float = 0.0
     collapse_repeats: bool = False
     aliases: dict[str, str] = Field(default_factory=dict)
+    # Final-answer comparison: presence (v1 default) | lexical | embedding
+    final_answer: str = "presence"
+    final_answer_threshold: float = 0.7
+
+    @field_validator("final_answer")
+    @classmethod
+    def _check_mode(cls, v: str) -> str:
+        if v not in ("presence", "lexical", "embedding"):
+            raise ValueError(
+                f"align.final_answer must be presence, lexical, or embedding — got {v!r}"
+            )
+        return v
 
 
 class VerdictConfig(BaseModel):

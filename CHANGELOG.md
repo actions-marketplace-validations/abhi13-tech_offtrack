@@ -4,6 +4,15 @@ All notable changes to offtrack are documented here. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-04
+
+Semantic final-answer comparison.
+
+### Added
+- `Matcher` protocol and chain: pluggable step similarity with defer-down semantics; the structural matcher always anchors the chain
+- `align.final_answer: presence | lexical | embedding` — presence keeps v1 semantics; lexical is a deterministic offline token-cosine/sequence blend; embedding uses OpenAI embeddings (opt-in, cached per distinct answer, degrades to lexical with a warning when unavailable)
+- `align.final_answer_threshold` (default 0.7) — answers at or above it read as clean matches; below it they pair as a `changed_step` (never split into missing+extra)
+
 ## [0.2.0] - 2026-08-04
 
 Zero-code capture.

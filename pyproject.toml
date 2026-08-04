@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "offtrack"
-version = "0.2.0"
+version = "0.3.0"
 description = "git diff for AI agent runs — record golden trajectories, find the first divergent step, gate CI on real regressions"
 readme = "README.md"
 license = "MIT"

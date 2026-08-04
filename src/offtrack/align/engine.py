@@ -5,10 +5,13 @@ localization, resync detection, and multi-variant baseline matching.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Final, Literal
+from typing import TYPE_CHECKING, Final, Literal
 
-from offtrack.align.similarity import step_sim
+from offtrack.align.similarity import step_sim  # noqa: F401  (re-exported for compat)
 from offtrack.model import Step, Trajectory
+
+if TYPE_CHECKING:
+    from offtrack.align.matchers import AlignContext
 
 OpKind = Literal["pair", "missing_step", "extra_step"]
 
@@ -71,8 +74,14 @@ def align(
     rel_tol: float = 0.0,
     model_exempt: bool = False,
     aliases: dict[str, str] | None = None,
+    ctx: AlignContext | None = None,
 ) -> Alignment:
-    """Global alignment of candidate against one baseline variant."""
+    """Global alignment of candidate against one baseline variant.
+
+    When ctx is provided, similarity runs through the matcher chain built
+    from it (semantic final-answer comparison etc.); otherwise the
+    structural default applies.
+    """
     warnings: list[str] = []
     a, b = baseline, candidate
     truncated = False
@@ -88,17 +97,25 @@ def align(
         approximate = True
         warnings.append(f"approximate alignment (banded, >{MAX_FULL_STEPS} steps)")
 
+    if ctx is None:
+        from offtrack.align.matchers import AlignContext
+
+        ctx = AlignContext(rel_tol=rel_tol, model_exempt=model_exempt, aliases=aliases)
+    from offtrack.align.matchers import build_chain, chain_similarity
+
+    chain = build_chain(ctx)
     memo: dict[tuple[str, str], float] = {}
 
     def sim(i: int, j: int) -> float:
         key = (a[i].content_hash, b[j].content_hash)
         if key not in memo:
-            memo[key] = step_sim(
-                a[i], b[j], rel_tol=rel_tol, model_exempt=model_exempt, aliases=aliases
-            )
+            memo[key] = chain_similarity(chain, a[i], b[j], ctx)
         return memo[key]
 
     ops = _needleman_wunsch(a, b, sim, gap, band)
+    for w in ctx.warnings:
+        if w not in warnings:
+            warnings.append(w)
     score = sum(
         _pair_score(op.sim) if op.kind == PAIR and op.sim is not None else gap for op in ops
     )
@@ -233,6 +250,7 @@ def best_variant_match(
     rel_tol: float = 0.0,
     model_exempt: bool = False,
     aliases: dict[str, str] | None = None,
+    ctx: AlignContext | None = None,
 ) -> VariantMatch:
     """Align candidate against every distinct baseline variant; best norm_score
     wins. Divergent only if the best variant diverges."""
@@ -249,6 +267,7 @@ def best_variant_match(
             rel_tol=rel_tol,
             model_exempt=model_exempt,
             aliases=aliases,
+            ctx=ctx,
         )
         match = VariantMatch(alignment, vi, len(variants), seen)
         if best is None or alignment.norm_score > best.alignment.norm_score:
