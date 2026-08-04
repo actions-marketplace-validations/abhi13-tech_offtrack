@@ -4,6 +4,19 @@ All notable changes to offtrack are documented here. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-04
+
+Zero-code capture.
+
+### Added
+- `offtrack.capture.install()` — patches the OpenAI and Anthropic Python SDKs; every LLM call and tool call recorded with zero agent-code changes (tool steps reconstructed by message delta)
+- LangGraph/LangChain adapter: `OfftrackCallbackHandler` recording real executed tool args/results, model names, and token usage
+- Claude Code session ingest: `offtrack ingest claude-code <session.jsonl>` (Task sidechains collapse to handoff steps)
+- `offtrack ingest explain <file>` — per-span OTel classification decisions
+
+### Fixed
+- Builder crash when timestamped and untimestamped steps mixed (naive/aware datetime comparison)
+
 ## [0.1.0] - 2026-08-04
 
 Initial release.

@@ -44,7 +44,28 @@ offtrack record               # capture golden trajectories (N runs per task)
 offtrack check                # first divergent step + verdict + exit code
 ```
 
-Your agent needs one thing: write capture events (JSONL) to `$OFFTRACK_TRACE_DIR`, or export OpenTelemetry GenAI traces there — offtrack ingests both semconv generations and the OpenInference flavor.
+## Capturing traces — three ways
+
+**Zero-code (OpenAI / Anthropic SDKs)** — two lines at your agent's entrypoint:
+
+```python
+import offtrack.capture
+offtrack.capture.install()   # patches whichever SDKs are importable
+```
+
+Every LLM call is recorded, and tool calls are reconstructed by message delta — real names, args, and results, no changes to your agent loop.
+
+**LangGraph / LangChain** — pass the callback:
+
+```python
+from offtrack.integrations.langgraph import OfftrackCallbackHandler
+
+handler = OfftrackCallbackHandler()
+graph.invoke(inputs, config={"callbacks": [handler]})
+handler.finish()
+```
+
+**Anything else** — write capture events (JSONL) to `$OFFTRACK_TRACE_DIR`, or export OpenTelemetry GenAI traces there: offtrack ingests both semconv generations and the OpenInference flavor. Claude Code sessions import directly with `offtrack ingest claude-code <session.jsonl>`.
 
 ## How it works
 
@@ -110,8 +131,8 @@ The fake mode is a scripted LLM, not a mocked test — the entire real pipeline 
 
 ## Roadmap
 
-- LangGraph callback + OpenAI/Anthropic SDK capture shims (zero-code instrumentation)
-- Claude Code session ingest
+- ~~LangGraph callback + OpenAI/Anthropic SDK capture shims~~ — shipped in 0.2.0 (`offtrack.capture.install()`)
+- ~~Claude Code session ingest~~ — shipped in 0.2.0 (`offtrack ingest claude-code`)
 - Semantic matchers (embedding / LLM-judge) via the `Matcher` protocol — v1 is deterministic-only by design
 - `offtrack bisect` — find the commit that introduced a divergence
 - CrewAI / Pydantic-AI adapters · HTML report viewer
