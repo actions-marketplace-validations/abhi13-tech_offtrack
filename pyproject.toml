@@ -82,6 +82,10 @@ files = ["src/offtrack"]
 module = ["offtrack.capture", "offtrack.integrations.*"]
 disallow_untyped_defs = false
 warn_unused_ignores = false
+
+[[tool.mypy.overrides]]
+# Provider SDKs are optional extras — absent in the default dev env.
+module = ["openai.*", "anthropic.*", "langchain_core.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
