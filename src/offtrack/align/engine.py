@@ -5,14 +5,16 @@ localization, resync detection, and multi-variant baseline matching.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Final, Literal
 
 from offtrack.align.similarity import step_sim
 from offtrack.model import Step, Trajectory
 
-PAIR = "pair"
-GAP_A = "missing_step"  # baseline-only (candidate lacks it)
-GAP_B = "extra_step"  # candidate-only
+OpKind = Literal["pair", "missing_step", "extra_step"]
+
+PAIR: Final[OpKind] = "pair"
+GAP_A: Final[OpKind] = "missing_step"  # baseline-only (candidate lacks it)
+GAP_B: Final[OpKind] = "extra_step"  # candidate-only
 
 DEFAULT_GAP = -0.45
 DEFAULT_DIVERGENCE_THRESHOLD = 0.85
@@ -24,7 +26,7 @@ RESYNC_RUN = 2
 
 @dataclass
 class AlignOp:
-    kind: Literal["pair", "missing_step", "extra_step"]
+    kind: OpKind
     a_idx: int | None  # baseline step idx
     b_idx: int | None  # candidate step idx
     sim: float | None = None  # for pairs
