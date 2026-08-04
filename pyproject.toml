@@ -66,7 +66,7 @@ src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
-ignore = ["SIM108"]
+ignore = ["SIM108", "RUF001", "RUF002", "RUF003"]  # RUF00x: en/em dashes in prose are fine
 
 [tool.mypy]
 strict = true
