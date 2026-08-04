@@ -58,6 +58,7 @@ dev = [
   "ruff>=0.6",
   "mypy>=1.11",
   "types-pyyaml",
+  "langchain-core>=0.2",
 ]
 
 [tool.ruff]
@@ -75,6 +76,13 @@ ignore = ["SIM108", "RUF001", "RUF002", "RUF003"]  # RUF00x: en/em dashes in pro
 strict = true
 python_version = "3.10"
 files = ["src/offtrack"]
+
+[[tool.mypy.overrides]]
+# Optional-provider modules: SDKs may be absent, patching is inherently untyped.
+module = ["offtrack.capture", "offtrack.integrations.*"]
+disallow_untyped_defs = false
+warn_unused_ignores = false
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

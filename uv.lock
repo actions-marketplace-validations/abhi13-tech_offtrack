@@ -793,6 +793,7 @@ pytest = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "langchain-core" },
     { name = "mypy" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -818,6 +819,7 @@ provides-extras = ["openai", "anthropic", "langgraph", "otel", "pytest", "all"]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "langchain-core", specifier = ">=0.2" },
     { name = "mypy", specifier = ">=1.11" },
     { name = "pytest", specifier = ">=8" },
     { name = "pytest-cov", specifier = ">=5" },

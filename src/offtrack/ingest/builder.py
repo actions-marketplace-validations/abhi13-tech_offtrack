@@ -14,7 +14,7 @@ Capture-event JSONL format (one JSON object per line):
 from __future__ import annotations
 
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -113,7 +113,17 @@ def build_trajectory(
         )
 
     # Stable order: by start time when present, tie-break by source sequence.
-    order = sorted(range(len(steps)), key=lambda i: (steps[i].started_at or datetime.max, i))
+    # Sentinel must be tz-aware: real timestamps are UTC and naive/aware mix
+    # raises TypeError in comparison.
+    _max = datetime.max.replace(tzinfo=timezone.utc)
+
+    def _sort_key(i: int) -> tuple[datetime, int]:
+        ts = steps[i].started_at
+        if ts is not None and ts.tzinfo is None:
+            ts = ts.replace(tzinfo=timezone.utc)
+        return (ts or _max, i)
+
+    order = sorted(range(len(steps)), key=_sort_key)
     steps = [steps[i] for i in order]
 
     if end_status is None and steps:
