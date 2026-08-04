@@ -84,6 +84,14 @@ def version() -> None:
     console.print(__version__)
 
 
+from offtrack.cli.inspect_cmds import baseline_app, diff, doctor, show  # noqa: E402
+
+app.command()(show)
+app.command()(diff)
+app.command()(doctor)
+app.add_typer(baseline_app, name="baseline")
+
+
 @app.command()
 def record(
     ctx: typer.Context,
