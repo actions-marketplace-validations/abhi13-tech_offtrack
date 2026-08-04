@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write # PyPI Trusted Publishing (OIDC) — no token secrets
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Extract changelog for this version
+        id: notes
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v ver="$version" '
+            $0 ~ "^## \\[" ver "\\]" {flag=1; next}
+            /^## \[/ {flag=0}
+            flag' CHANGELOG.md > notes.md || true
+          [ -s notes.md ] || echo "Release $version" > notes.md
+      - uses: softprops/action-gh-release@v2
+        with:
+          body_path: notes.md
+      - name: Move the v0 major tag
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          major="${GITHUB_REF_NAME%%.*}"
+          git tag -f "$major"
+          git push -f origin "$major"

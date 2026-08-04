@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python: ["3.10", "3.12", "3.13"]
+        include:
+          - os: macos-latest
+            python: "3.12"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Sync
+        run: uv sync --all-extras --group dev
+      - name: Lint
+        run: |
+          uv run ruff check src tests
+          uv run ruff format --check src tests
+      - name: Typecheck
+        run: uv run mypy
+      - name: Test
+        run: uv run pytest --cov --cov-fail-under=80 -q
+      - name: Build
+        run: |
+          uv build
+          uv run --with twine twine check dist/*

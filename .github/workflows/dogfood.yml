@@ -1,0 +1,32 @@
+# offtrack gates its own demo agent on every PR — if this badge is green,
+# the product works. The gate's failure path is itself under test in
+# tests/integration/test_gate_catches_regression.py.
+name: gated by offtrack
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  dogfood:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Baselines are COMMITTED (examples/refund-agent/baselines/) — changing
+      # golden behavior is a reviewed act. Fake mode: offline, $0.
+      - name: Gate against committed demo baselines
+        uses: ./
+        with:
+          suite: offtrack.yaml
+          working-directory: examples/refund-agent
+          offtrack-version: "" # from source — this PR's code is what's tested
+        env:
+          AGENT_MODEL: fake-careful

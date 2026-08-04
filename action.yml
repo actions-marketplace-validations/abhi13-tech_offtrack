@@ -1,0 +1,105 @@
+name: "offtrack"
+description: "Gate CI on AI-agent trajectory regressions: record golden runs, diff new ones, fail on the first divergent step."
+branding:
+  icon: "git-branch"
+  color: "orange"
+
+inputs:
+  suite:
+    description: "Path to offtrack.yaml"
+    default: "offtrack.yaml"
+  baselines:
+    description: "Committed baselines directory"
+    default: "baselines"
+  runs:
+    description: "Candidate runs per task"
+    default: "5"
+  inconclusive-as:
+    description: "Map INCONCLUSIVE to: pass | fail | inconclusive"
+    default: "inconclusive"
+  offtrack-version:
+    description: "PyPI version to install; empty string installs from the checked-out source"
+    default: "latest"
+  working-directory:
+    description: "Directory containing the suite"
+    default: "."
+
+outputs:
+  verdict:
+    description: "PASS | FAIL | INCONCLUSIVE | ERROR"
+    value: ${{ steps.check.outputs.verdict }}
+  report-path:
+    description: "Path to the markdown report"
+    value: ${{ steps.check.outputs.report }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install offtrack
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        python -m pip install --quiet --upgrade pip
+        if [ -z "${{ inputs.offtrack-version }}" ]; then
+          pip install --quiet .
+        elif [ "${{ inputs.offtrack-version }}" = "latest" ]; then
+          pip install --quiet offtrack
+        else
+          pip install --quiet "offtrack==${{ inputs.offtrack-version }}"
+        fi
+
+    - name: offtrack check
+      id: check
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        set +e
+        offtrack --config "${{ inputs.suite }}" check \
+          --runs "${{ inputs.runs }}" \
+          --report terminal --report md --report github \
+          --report-out offtrack-report.md \
+          --inconclusive-as "${{ inputs.inconclusive-as }}"
+        code=$?
+        set -e
+        echo "report=${{ inputs.working-directory }}/offtrack-report.md" >> "$GITHUB_OUTPUT"
+        case $code in
+          0) echo "verdict=PASS"          >> "$GITHUB_OUTPUT" ;;
+          1) echo "verdict=FAIL"          >> "$GITHUB_OUTPUT" ;;
+          3) echo "verdict=INCONCLUSIVE"  >> "$GITHUB_OUTPUT"
+             # Inconclusive must not block merges by default — that trains
+             # users to ignore the gate. Strictness is opt-in.
+             echo "::warning::offtrack verdict INCONCLUSIVE — see the job summary. Use inconclusive-as: fail to gate strictly."
+             exit 0 ;;
+          *) echo "verdict=ERROR"         >> "$GITHUB_OUTPUT" ;;
+        esac
+        exit $code
+
+    - name: Upload full traces
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: offtrack-traces
+        path: ${{ inputs.working-directory }}/offtrack-report.md
+        retention-days: 14
+        if-no-files-found: ignore
+
+    - name: Comment on PR
+      if: github.event_name == 'pull_request' && always()
+      continue-on-error: true # forks have a read-only token; the step summary still works
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        report="${{ inputs.working-directory }}/offtrack-report.md"
+        [ -f "$report" ] || exit 0
+        pr=${{ github.event.pull_request.number }}
+        marker='<!-- offtrack-report -->'
+        existing=$(gh api "repos/${{ github.repository }}/issues/$pr/comments" \
+          --jq ".[] | select(.body | startswith(\"$marker\")) | .id" | head -1)
+        if [ -n "$existing" ]; then
+          gh api -X PATCH "repos/${{ github.repository }}/issues/comments/$existing" \
+            -F body=@"$report" >/dev/null
+        else
+          gh api "repos/${{ github.repository }}/issues/$pr/comments" \
+            -F body=@"$report" >/dev/null
+        fi
