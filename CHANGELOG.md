@@ -4,6 +4,12 @@ All notable changes to offtrack are documented here. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-04
+
+### Added
+- `offtrack bisect --good <ref> [--bad HEAD]` — binary-search the commit that introduced a behavioral divergence. Agent code runs per-probe in isolated git worktrees; baselines stay pinned from the good ref; endpoints are verified first so wrong --good/--bad claims fail loudly instead of producing a confident wrong answer; ERROR probes (no usable runs) abort rather than counting as good
+- Runner accepts a working directory, so relative `run.command` paths resolve against each probed commit
+
 ## [0.3.0] - 2026-08-04
 
 Semantic final-answer comparison.

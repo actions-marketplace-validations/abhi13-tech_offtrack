@@ -134,7 +134,7 @@ The fake mode is a scripted LLM, not a mocked test — the entire real pipeline 
 - ~~LangGraph callback + OpenAI/Anthropic SDK capture shims~~ — shipped in 0.2.0 (`offtrack.capture.install()`)
 - ~~Claude Code session ingest~~ — shipped in 0.2.0 (`offtrack ingest claude-code`)
 - ~~Semantic matchers~~ — shipped in 0.3.0 (`align.final_answer: lexical | embedding`; LLM-judge matcher still to come)
-- `offtrack bisect` — find the commit that introduced a divergence
+- ~~`offtrack bisect`~~ — shipped in 0.4.0 (`offtrack bisect --good <ref>`)
 - CrewAI / Pydantic-AI adapters · HTML report viewer
 
 ## Development

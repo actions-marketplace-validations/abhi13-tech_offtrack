@@ -37,6 +37,7 @@ def run_attempt(
     kind: str,
     work_root: Path,
     run_id: str,
+    cwd: Path | None = None,
 ) -> AttemptOutcome:
     trace_dir = work_root / rt.task_key.replace("/", "_") / str(attempt)
     if trace_dir.exists():
@@ -74,6 +75,7 @@ def run_attempt(
             timeout=rt.timeout_s,
             capture_output=True,
             text=True,
+            cwd=cwd,
         )
         exit_code = proc.returncode
         stderr_tail = (proc.stderr or "")[-2000:]
@@ -126,7 +128,8 @@ def run_task(
     work_root: Path,
     run_id: str,
     repetitions: int | None = None,
+    cwd: Path | None = None,
 ) -> TaskRunResult:
     n = repetitions or rt.repetitions
-    outcomes = [run_attempt(rt, i, kind, work_root, run_id) for i in range(n)]
+    outcomes = [run_attempt(rt, i, kind, work_root, run_id, cwd=cwd) for i in range(n)]
     return TaskRunResult(rt.task_key, outcomes)
